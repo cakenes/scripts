@@ -22,11 +22,12 @@ gets pid from filename.sh, edit script when renaming
 ## Wm
 ### dependencies
 ```shell
-virsh, virt-viewer
+virsh, virt-viewer, qemu
 user added to group 'libvirt' 
 ```
 
 ### wm.sh
 ```shell
-Launch vm(if not already running) and viewer, shutdown vm when you exit viewer
+Launch vm (if not already running) and connect viewer
+Shutdown vm when you exit viewer
 ```
