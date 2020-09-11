@@ -7,6 +7,4 @@ elif [[ $focus == "World of Warcraft" ]]; then
   exit 1
 fi
 
-kill=$(xdotool getwindowfocus getwindowpid)
-
-kill $kill
+wmctrl -c :ACTIVE:
