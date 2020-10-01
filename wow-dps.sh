@@ -2,8 +2,8 @@
 
 for pid in $(pidof -x wow-dps.sh); do
   if [ $pid != $$ ]; then
-    killall wow-dps.sh
     notify-send -t 2000 "Stopped"
+    killall wow-dps.sh
     exit 1
   fi
 done
