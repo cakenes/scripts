@@ -14,7 +14,7 @@ while :
 do
 
   sleeprandom=$(printf "0.2%01d\n" $(( RANDOM % 10 )))
-  keyrandom=$(printf "0.01%01d\n" $(( RANDOM % 10 )))
+  keyrandom=$(printf "0.05%01d\n" $(( RANDOM % 10 )))
 
   sleep $sleeprandom
 
@@ -26,39 +26,12 @@ do
   id=$(wmctrl -l | grep "World of Warcraft" | awk '{print $1}')
   color=$(grabc -w $id -l +429+1022)
 
-  case $color in
-    "#000000")
-      continue
-      ;;
-    "#100000")
-	# 1
-      xdo key_press -k 10
-      sleep $keyrandom
-      xdo key_release -k 10
-      ;;
-    "#110000")
-        # 2
-      xdo key_press -k 11
-      sleep $keyrandom
-      xdo key_release -k 11
-      ;;
-    "#230000")
-	# Tab
-      xdo key_press -k 23
-      sleep $keyrandom
-      xdo key_release -k 23
-      ;;
-    "#240000")
-	# Q
-      xdo key_press -k 24
-      sleep $keyrandom
-      xdo key_release -k 24
-      ;;
-    "#260000")
-	# E
-      xdo key_press -k 26
-      sleep $keyrandom
-      xdo key_release -k 26
-      ;;
-  esac
+  if [[ $color == "#000000" ]]; then
+    continue
+  else
+    xdo key_press -k ${color:1:2}
+    sleep $keyrandom
+    xdo key_release -k ${color:1:2}
+  fi
+
 done
