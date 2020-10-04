@@ -13,7 +13,7 @@ while :
 do
   sleep 1
   viewer=$(pidof -x virt-viewer)
-  if [ $viewer >= 0 ]; then
+  if [ -z $viewer ]; then
     virsh --connect qemu:///system shutdown $vm
     exit 1
   fi
