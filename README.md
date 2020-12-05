@@ -14,10 +14,6 @@ sudo cp /usr/bin/iptables
 sudo chown root iptables
 sudo chmod u+s iptables
  ```
-### poe-flask.sh
-```shell
-gets pid from filename.sh, edit script when renaming
-```
 
 ## Wm
 ### dependencies
