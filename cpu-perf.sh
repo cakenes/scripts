@@ -5,9 +5,11 @@ current=$(cat /sys/devices/system/cpu/intel_pstate/max_perf_pct)
 if [[ $current == "100" ]]; then
    notify-send -t 2000 "Max Performance 20%"
    echo "20" | ~/.config/scripts/tee /sys/devices/system/cpu/intel_pstate/max_perf_pct
+   xinput set-prop 12 332 0
 else
    notify-send -t 2000 "Max Perfromance 100%"
    echo "100" | ~/.config/scripts/tee /sys/devices/system/cpu/intel_pstate/max_perf_pct
+   xinput set-prop 12 332 1
 fi
 
 exit 1
