@@ -7,6 +7,7 @@ for pid in $(pidof -x screen-off.sh); do
 done
 
 sleep 2
+nvidia-smi -rgc
 xset dpms force off
 
 while :
