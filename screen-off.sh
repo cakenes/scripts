@@ -1,22 +1,23 @@
 #!/bin/bash
 
 for pid in $(pidof -x screen-off.sh); do
-    if [ $pid != $$ ]; then
+    if [[ $pid != $$ ]]; then
         exit 1
     fi
 done
 
 xset s activate
-sleep 5
-xset dpms force off
 
 while :
 do
-    sleep 30
+    sleep 5
     pid=$(pidof -x i3lock)
-    if [[ ! -z $pid ]]; then
-        xset dpms force off
-    else
+    idle=$(xprintidle)
+    monitor=$(xset q -display :0 | grep 'Monitor is On')
+
+    if [[ -z $pid ]]; then
         exit 1
+    elif [[ 10000 -lt $idle ]] && [[ -n $monitor ]]; then
+        xset dpms force off
     fi
 done
