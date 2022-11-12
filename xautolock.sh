@@ -7,10 +7,10 @@ do
     pid=$(pidof -x xautolock)
     battery=$(dbus-send --session --print-reply --dest=org.freedesktop.PowerManagement /org/freedesktop/PowerManagement org.freedesktop.PowerManagement.GetOnBattery | awk NR==2'{print $2}')
 
-    if [ $battery == "false" ] && [ $type != wall ] && [ ! -z $pid]; then
+    if [ $battery == "false" ] && [ $type != wall ] && [ ! -z $pid ]; then
         echo Killing xAutolock, changing to wall power.
         killall xautolock
-    elif [ $battery == "true" ] && [ $type != battery ] && [ ! -z $pid]; then
+    elif [ $battery == "true" ] && [ $type != battery ] && [ ! -z $pid ]; then
         echo Killing xAutolock, changing to battery power.
         killall xautolock
     fi
