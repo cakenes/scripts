@@ -9,10 +9,11 @@ do
     echo $battery
 
     if [ $inhibit == "false" ] && [ -z $pid ]; then
-        echo xautolock ON
 	if [ $battery == "false" ]; then
+            echo xautolock ON 15min
             xautolock -time 15 -locker "sh /home/used/.config/scripts/screen-off.sh" &
         else
+            echo xautolock ON 5min
             xautolock -time 5 -locker "sh /home/used/.config/scripts/screen-off.sh" &
         fi
     fi
