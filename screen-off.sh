@@ -6,7 +6,8 @@ for pid in $(pidof -x screen-off.sh); do
     fi
 done
 
-sleep 2
+xset s activate
+sleep 5
 xset dpms force off
 
 while :
