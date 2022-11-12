@@ -6,15 +6,18 @@ while :
 do 
     pid=$(pidof -x xautolock)
     battery=$(dbus-send --session --print-reply --dest=org.freedesktop.PowerManagement /org/freedesktop/PowerManagement org.freedesktop.PowerManagement.GetOnBattery | awk NR==2'{print $2}')
-    inhibit=$(dbus-send --session --print-reply --dest=org.freedesktop.PowerManagement /org/freedesktop/PowerManagement/Inhibit org.freedesktop.PowerManagement.Inhibit.HasInhibit | awk NR==2'{print $2}')
 
-    if [ $battery == "false" ] && [ $type != wall ]; then
+    if [ $battery == "false" ] && [ $type != wall ] && [ ! -z $pid]; then
         echo Killing xAutolock, changing to wall power.
         killall xautolock
-    elif [ $battery == "true" ] && [ $type != battery ]; then
+    elif [ $battery == "true" ] && [ $type != battery ] && [ ! -z $pid]; then
         echo Killing xAutolock, changing to battery power.
         killall xautolock
     fi
+
+    sleep 5
+    pid=$(pidof -x xautolock)
+    inhibit=$(dbus-send --session --print-reply --dest=org.freedesktop.PowerManagement /org/freedesktop/PowerManagement/Inhibit org.freedesktop.PowerManagement.Inhibit.HasInhibit | awk NR==2'{print $2}')
 
     if [ $inhibit == "false" ] && [ -z $pid ]; then
 	if [ $battery == "false" ]; then
@@ -33,5 +36,5 @@ do
         killall xautolock
     fi
 
-    sleep 10
+    sleep 5
 done
