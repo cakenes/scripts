@@ -4,11 +4,11 @@ type=wall
 
 while :
 do 
-    sleep 10
-
     pid=$(pidof -x xautolock)
     battery=$(dbus-send --session --print-reply --dest=org.freedesktop.PowerManagement /org/freedesktop/PowerManagement org.freedesktop.PowerManagement.GetOnBattery | awk NR==2'{print $2}')
     inhibit=$(dbus-send --session --print-reply --dest=org.freedesktop.PowerManagement /org/freedesktop/PowerManagement/Inhibit org.freedesktop.PowerManagement.Inhibit.HasInhibit | awk NR==2'{print $2}')
+
+    sleep 1
 
     if [[ $battery == "false" ]] && [[ $type != wall ]] && [[ ! -z $pid ]]; then
         echo Killing xAutolock, changing to wall power.
@@ -19,14 +19,14 @@ do
     fi
 
     if [[ $inhibit == "false" ]] && [[ -z $pid ]]; then
-	    if [[ $battery == "false" ]]; then
-	        type=wall
+	if [[ $battery == "false" ]]; then
+	    type=wall
             echo xAutolock ON with 15min timer.
             xautolock -time 15 -locker "sh ~/.config/scripts/screen-off.sh" &
         elif [[ $battery == "true" ]]; then
             type=battery
             echo xAutolock ON with 5min timer.
-            xautolock -time 5 -locker "sh ~/.config/scripts/screen-off.sh" &
+            xautolock -time 1 -locker "sh ~/.config/scripts/screen-off.sh" &
         fi
     fi
 
@@ -34,4 +34,5 @@ do
         echo Killing xAutolock, inhibiting
         killall xautolock
     fi
+
 done
