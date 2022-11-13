@@ -26,7 +26,7 @@ do
         elif [[ $battery == "true" ]]; then
             type=battery
             echo xAutolock ON with 5min timer.
-            xautolock -time 1 -locker "sh ~/.config/scripts/screen-off.sh" &
+            xautolock -time 5 -locker "sh ~/.config/scripts/screen-off.sh" &
         fi
     fi
 
