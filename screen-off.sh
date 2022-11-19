@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! [[ -x "$(command -v i3lock)" ]] || ! [[ -x "$(command -v xprintidle)" ]]; then
+  echo "Error: i3lock or xprintidle is not installed."
+  exit 1
+fi
+
 for pid in $(pidof -x screen-off.sh); do
     if [[ $pid != $$ ]]; then
         exit 1
