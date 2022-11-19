@@ -2,7 +2,7 @@
 Description=xautolock
 
 [Service]
-ExecStart=sh ${HOME}/.config/scripts/xautolock.sh ${HOME}
+ExecStart=sh ${HOME}/.config/scripts/xautolock.sh ${HOME} 10 3
 Restart=on-failure
 RestartSec=3
 
