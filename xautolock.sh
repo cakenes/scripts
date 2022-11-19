@@ -27,11 +27,11 @@ do
 	if [[ $battery == "false" ]]; then
 	    type=wall
             echo xAutolock ON with 10min timer.
-            xautolock -time 10 -locker "sh ~/.config/scripts/screen-off.sh" &
+            xautolock -time 10 -locker "sh $1/.config/scripts/screen-off.sh" &
         elif [[ $battery == "true" ]]; then
             type=battery
             echo xAutolock ON with 3min timer.
-            xautolock -time 3 -locker "sh ~/.config/scripts/screen-off.sh" &
+            xautolock -time 3 -locker "sh $1/.config/scripts/screen-off.sh" &
         fi
     fi
 
