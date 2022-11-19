@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ ! -x "$(command -v xautolock)" ]] || [[ ! -x "$(command -v xss-lock)" ]] || [[ ! -x "$(command -v killall)" ]]; then
+if [[ ! -x "$(command -v xautolock)" || ! -x "$(command -v xss-lock)" || ! -x "$(command -v killall)" ]]; then
   echo "Error: xautolock,killall and xss-lock must be installed."
   exit 1
 fi
@@ -16,15 +16,15 @@ do
 
     sleep 1
 
-    if [[ $battery == "false" ]] && [[ $powerType != wall ]] && [[ ! -z $pid ]]; then
+    if [[ $battery == "false" && $powerType != wall && ! -z $pid ]]; then
         echo Killing xAutolock, changing to wall power.
         killall xautolock
-    elif [[ $battery == "true" ]] && [[ $powerType != battery ]] && [[ ! -z $pid ]]; then
+    elif [[ $battery == "true" && $powerType != battery && ! -z $pid ]]; then
         echo Killing xAutolock, changing to battery power.
         killall xautolock
     fi
 
-    if [[ $inhibit == "false" ]] && [[ -z $pid ]]; then
+    if [[ $inhibit == "false" || $checkInhibit == "false" ]] && [[ -z $pid ]]; then
 	if [[ $battery == "false" ]]; then
 	    powerType=wall
             echo xAutolock ON with 10min timer.
@@ -36,7 +36,7 @@ do
         fi
     fi
 
-    if [[ $checkInhibit == "true" ]] && [[ $inhibit == "true" ]] && [[ ! -z $pid ]]; then
+    if [[ $checkInhibit == "true" && $inhibit == "true" && ! -z $pid ]]; then
         echo Killing xAutolock, inhibiting
         killall xautolock
     fi
