@@ -1,0 +1,10 @@
+[Unit]
+Description=xautolock
+
+[Service]
+ExecStart=sh ${HOME}/.config/scripts/xautolock.sh ${HOME}
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target
