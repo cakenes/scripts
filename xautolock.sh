@@ -5,7 +5,8 @@ if [[ ! -x "$(command -v xautolock)" ]] || [[ ! -x "$(command -v xss-lock)" ]] |
   exit 1
 fi
 
-type=wall
+powerType=wall
+checkInhibit=true
 
 while :
 do 
@@ -15,27 +16,27 @@ do
 
     sleep 1
 
-    if [[ $battery == "false" ]] && [[ $type != wall ]] && [[ ! -z $pid ]]; then
+    if [[ $battery == "false" ]] && [[ $powerType != wall ]] && [[ ! -z $pid ]]; then
         echo Killing xAutolock, changing to wall power.
         killall xautolock
-    elif [[ $battery == "true" ]] && [[ $type != battery ]] && [[ ! -z $pid ]]; then
+    elif [[ $battery == "true" ]] && [[ $powerType != battery ]] && [[ ! -z $pid ]]; then
         echo Killing xAutolock, changing to battery power.
         killall xautolock
     fi
 
     if [[ $inhibit == "false" ]] && [[ -z $pid ]]; then
 	if [[ $battery == "false" ]]; then
-	    type=wall
+	    powerType=wall
             echo xAutolock ON with 10min timer.
             xautolock -time 10 -locker "sh $1/.config/scripts/screen-off.sh" &
         elif [[ $battery == "true" ]]; then
-            type=battery
+            powerType=battery
             echo xAutolock ON with 3min timer.
             xautolock -time 3 -locker "sh $1/.config/scripts/screen-off.sh" &
         fi
     fi
 
-    if [[ $inhibit == "true" ]] && [[ ! -z $pid ]]; then
+    if [[ $checkInhibit == "true" ]] && [[ $inhibit == "true" ]] && [[ ! -z $pid ]]; then
         echo Killing xAutolock, inhibiting
         killall xautolock
     fi
