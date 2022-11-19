@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if ! [[ -x "$(command -v xautolock)" ]] || ! [[ -x "$(command -v killall)" ]]; then
-  echo "Error: xautolock or killall is not installed."
+if [[ ! -x "$(command -v xautolock)" ]] || [[ ! -x "$(command -v xss-lock)" ]] || [[ ! -x "$(command -v killall)" ]]; then
+  echo "Error: xautolock,killall and xss-lock must be installed."
   exit 1
 fi
 
@@ -39,5 +39,4 @@ do
         echo Killing xAutolock, inhibiting
         killall xautolock
     fi
-
 done
