@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! [[ -x "$(command -v xautolock)" ]] || ! [[ -x "$(command -v killall)" ]]; then
+  echo "Error: xautolock or killall is not installed."
+  exit 1
+fi
+
 type=wall
 
 while :
@@ -21,12 +26,12 @@ do
     if [[ $inhibit == "false" ]] && [[ -z $pid ]]; then
 	if [[ $battery == "false" ]]; then
 	    type=wall
-            echo xAutolock ON with 15min timer.
-            xautolock -time 15 -locker "sh ~/.config/scripts/screen-off.sh" &
+            echo xAutolock ON with 10min timer.
+            xautolock -time 10 -locker "sh ~/.config/scripts/screen-off.sh" &
         elif [[ $battery == "true" ]]; then
             type=battery
-            echo xAutolock ON with 5min timer.
-            xautolock -time 5 -locker "sh ~/.config/scripts/screen-off.sh" &
+            echo xAutolock ON with 3min timer.
+            xautolock -time 3 -locker "sh ~/.config/scripts/screen-off.sh" &
         fi
     fi
 
