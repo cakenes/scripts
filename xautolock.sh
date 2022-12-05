@@ -27,8 +27,8 @@ do
     if [[ $inhibit == "false" || $checkInhibit == "false" ]] && [[ -z $pid ]]; then
 	if [[ $battery == "false" ]]; then
 	    powerType=wall
-            echo xAutolock ON with 10 min timer.
-            xautolock -time 10 -locker "sh /home/used/.config/scripts/screen-off.sh" &
+            echo xAutolock ON with 6 min timer.
+            xautolock -time 6 -locker "sh /home/used/.config/scripts/screen-off.sh" &
         elif [[ $battery == "true" ]]; then
             powerType=battery
             echo xAutolock ON with 3 min timer.
