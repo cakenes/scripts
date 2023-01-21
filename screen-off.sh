@@ -5,11 +5,11 @@ if ! [[ -x "$(command -v i3lock)" ]] || ! [[ -x "$(command -v xprintidle)" ]]; t
   exit 1
 fi
 
-for pid in $(pidof -x screen-off.sh); do
-    if [[ $pid != $$ ]]; then
-        exit 1
-    fi
-done
+pid=$(pgrep -f screen-off.sh)
+
+if [[ -z $pid ]]; then
+    exit 1
+fi
 
 xset s activate
 
