@@ -20,6 +20,7 @@ do
     idle=$(xprintidle)
 
     if [[ -z $pid ]]; then
+	xfce4-panel -r
         exit 1
     elif [[ 10000 -lt $idle ]]; then
         xset dpms force off

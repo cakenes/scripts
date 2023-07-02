@@ -1,3 +1,11 @@
-~/.config/scripts/iptables -I INPUT -p tcp --sport 6112 --tcp-flags PSH,ACK PSH,ACK -j REJECT --reject-with tcp-reset
-sleep 1
-~/.config/scripts/iptables -D INPUT -p tcp --sport 6112 --tcp-flags PSH,ACK PSH,ACK -j REJECT --reject-with tcp-reset
+#!/bin/bash
+
+focus=$(xdotool getwindowfocus getwindowname)
+
+if [[ $focus != "Path of Exile" ]]; then
+  exit 1
+fi
+
+xdotool key "Return"
+xdotool type "/exit"
+xdotool key "Return"
