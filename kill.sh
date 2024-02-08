@@ -1,13 +1,12 @@
 #!/bin/bash
 
 focus=$(xdotool getwindowfocus getwindowname)
+ignore=("Path of Exile" "World of Warcraft" "ARK: Survival Evolved" "Last Epoch")
 
-if [[ $focus == "Path of Exile" ]]; then
-  exit 1
-elif [[ $focus == "World of Warcraft" ]]; then
-  exit 1
-elif [[ $focus == "ARK: Survival Evolved" ]]; then
-  exit 1
-fi
+for value in "${ignore[@]}"; do
+   if [[ $focus == $value ]]; then
+      exit 1
+   fi
+done
 
 wmctrl -c :ACTIVE:
