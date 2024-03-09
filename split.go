@@ -37,7 +37,11 @@ func main() {
 		var msg Msg
 
 		m := scanner.Text()
-		json.Unmarshal([]byte(m), &msg)
+		err := json.Unmarshal([]byte(m), &msg)
+		if err != nil {
+			log.Fatal(err)
+			return
+		}
 
 		if msg.Change == "focus" {
 			if msg.Container.WindowRect.Width > msg.Container.WindowRect.Height {
