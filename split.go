@@ -4,7 +4,9 @@ import (
 	"bufio"
 	"encoding/json"
 	"log"
+	"os"
 	"os/exec"
+	"slices"
 )
 
 type Msg struct {
@@ -13,15 +15,16 @@ type Msg struct {
 }
 
 type Container struct {
-	WindowRect Rect `json:"window_rect"`
+	WindowRect WindowRect `json:"window_rect"`
 }
 
-type Rect struct {
+type WindowRect struct {
 	Width  int `json:"width"`
 	Height int `json:"height"`
 }
 
 func main() {
+	debug := slices.Contains(os.Args, "--debug")
 	msgEvent := exec.Command("i3-msg", "-t", "subscribe", "-m", "[ \"window\" ]")
 
 	stdout, err := msgEvent.StdoutPipe()
@@ -45,10 +48,14 @@ func main() {
 
 		if msg.Change == "focus" {
 			if msg.Container.WindowRect.Width > msg.Container.WindowRect.Height {
-				println("Next split will be horizontal")
+				if debug {
+					println("Width", msg.Container.WindowRect.Width, ", Height", msg.Container.WindowRect.Height, " ,Next split will be horizontal")
+				}
 				exec.Command("i3-msg", "split", "horizontal").Run()
 			} else {
-				println("Next split will be vertical")
+				if debug {
+					println("Width", msg.Container.WindowRect.Width, ", Height", msg.Container.WindowRect.Height, " ,Next split will be vertical")
+				}
 				exec.Command("i3-msg", "split", "vertical").Run()
 			}
 		}
