@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/json"
-	"fmt"
+	"log"
 	"os/exec"
 )
 
@@ -23,22 +23,32 @@ type Rect struct {
 
 func main() {
 	msgEvent := exec.Command("i3-msg", "-t", "subscribe", "-m", "[ \"window\" ]")
-	stdout, _ := msgEvent.StdoutPipe()
+
+	stdout, err := msgEvent.StdoutPipe()
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
 	msgEvent.Start()
 	scanner := bufio.NewScanner(stdout)
+
 	for scanner.Scan() {
-		m := scanner.Text()
 		var msg Msg
+
+		m := scanner.Text()
 		json.Unmarshal([]byte(m), &msg)
+
 		if msg.Change == "focus" {
 			if msg.Container.WindowRect.Width > msg.Container.WindowRect.Height {
-				fmt.Println("Next split will be horizontal")
+				println("Next split will be horizontal")
 				exec.Command("i3-msg", "split", "horizontal").Run()
 			} else {
-				fmt.Println("Next split will be vertical")
+				println("Next split will be vertical")
 				exec.Command("i3-msg", "split", "vertical").Run()
 			}
 		}
 	}
+
 	msgEvent.Wait()
 }
