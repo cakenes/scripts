@@ -1,9 +1,0 @@
-[Unit]
-Description=Split daemon for i3
-
-[Service]
-ExecStart=/usr/local/bin/split
-Restart=on-failure
-
-[Install]
-WantedBy=multi-user.target
