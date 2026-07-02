@@ -1,6 +1,6 @@
 #!/bin/bash
 
-focus=$(xdotool getwindowfocus getwindowname | xargs)
+focus=$(swaymsg -t get_tree | jq -r '.. | select(.focused? == true) | .name' 2>/dev/null | xargs)
 ignore=("Path of Exile" "World of Warcraft" "ARK: Survival Evolved" "Last Epoch" "TheIsle")
 
 for value in "${ignore[@]}"; do
@@ -10,4 +10,4 @@ for value in "${ignore[@]}"; do
 	fi
 done
 
-wmctrl -c :ACTIVE:
+swaymsg kill
